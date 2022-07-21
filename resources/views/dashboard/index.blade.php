@@ -18,49 +18,54 @@
                 <strong>{{ session('danger') }}</strong>
             </div>
         @endif
-        {{-- <table class="table table-striped table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">no</th>
-                    <th scope="col">nama mahasiswa</th>
-                    <th scope="col">nama kursus</th>
-                    <th scope="col">file</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Aksi</th>
+        @if (auth()->user()->role_id == 1)
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">no</th>
+                        <th scope="col">nama mahasiswa</th>
+                        <th scope="col">nama kursus</th>
+                        <th scope="col">file</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Aksi</th>
 
-                </tr>
-            </thead>
-            <tbody>
+                    </tr>
+                </thead>
+                <tbody>
 
-                @foreach ($dmaha as $dp) --}}
-        {{-- @foreach ($mhs1 as $dp1) --}}
-        {{-- <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $dp->user->name }}</td>
-                        <td>{{ $dp->kursus->nama_kursus }}</td>
-                        <td>{{ $dp->nama_dokumen }}</td>
-                        <td>
-                            @if ($dp->status == 0)
-                                belum disetujui
-                            @else
-                                sudah disetujui
-                            @endif
-                        </td> --}}
-        {{-- <td>{{ $dp1->nama_dokumen }}</td> --}}
-        {{-- <td>
+                    @foreach ($dmaha as $dp)
+                        {{-- @foreach ($mhs1 as $dp1) --}}
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $dp->user->name }}</td>
+                            <td>{{ $dp->kursus->nama_kursus }}</td>
+                            <td>{{ $dp->nama_dokumen }}</td>
+                            <td>
+                                @if ($dp->user->status == 0)
+                                    belum disetujui
+                                @else
+                                    sudah disetujui
+                                @endif
+                            </td>
+                            {{-- <td>{{ $dp1->nama_dokumen }}</td> --}}
+                            <td>
+                                @if ($dp->user->status == 0)
+                                    <form action="/konfirmasi/{{ $dp->id_user }}" method="POST" class="d-inline">
+                                        @method('put')
+                                        @csrf
+                                        <button class="btn btn-danger text-white"
+                                            onclick="return confirm('Anda yakin ingin mensetujui?')"
+                                            type="submit">ubah</button>
+                                    </form>
+                                @else
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    {{-- @endforeach --}}
 
-                            <form action="/konfirmasi/{{ $dp->id_user }}" method="POST" class="d-inline">
-
-                                @csrf
-                                <button class="btn btn-danger text-white"
-                                    onclick="return confirm('Anda yakin ingin hapus?')" type="submit">hapus</button>
-                            </form>
-                        </td>
-                    </tr> --}}
-        {{-- @endforeach --}}
-        {{-- @endforeach
-
-            </tbody>
-        </table> --}}
+                </tbody>
+            </table>
+        @endif
     </main>
 @endsection

@@ -46,10 +46,10 @@
                                         {{-- @foreach ($mhs1 as $dp1) --}}
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $dp->name }}</td>
+                                            <td>{{ $dp->kursus->nama_kursus }}</td>
                                             <td>{{ $dp->nama_dokumen }}</td>
                                             <td>
-                                                @if ($dp->status == 0)
+                                                @if ($dp->user->status == 0)
                                                     belum disetujui
                                                 @else
                                                     sudah disetujui

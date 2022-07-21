@@ -84,7 +84,7 @@ class DashboardController extends Controller
     {
         return view('dashboard.pengajuan', [
             'title' => 'Daftar Kursus',
-            'kursus' => Data_mahasiswa::get()
+            'kursus' => Data_mahasiswa::where('id_user', Auth::user()->id)->get()
         ]);
     }
 
@@ -117,11 +117,26 @@ class DashboardController extends Controller
     public function konfirmasi($id_user)
     {
         $ubahstatus = User::findOrFail($id_user);
-        $ubahstatus['status'] = 1;
-        // $ubahstatus->all();
-        // return $ubahstatus;
-        User::where('id', $ubahstatus->id)->update($ubahstatus);
+        $ubahstatus->status = 1;
+        $ubahstatus->save();
         return redirect('/dasbor')->with('success', 'Berhasil mengubah status!');
         // return $ubahstatus;
+    }
+
+    public function hapusMHS($id)
+    {
+        $datamhs = User::findOrFail($id);
+        // return $datamhs;
+        $dataMHS = Data_mahasiswa::where('id_user', $datamhs->id)->first();
+        $datamahasiswa = Data_mahasiswa::where('id_user', $datamhs->id)->first();
+        if (!empty($datamahasiswa)) {
+            if ($dataMHS->nama_dokumen) {
+                $path = storage_path('app/public/file/' . $dataMHS->nama_dokumen);
+                unlink($path);
+            }
+            Data_mahasiswa::where('id_user', $datamhs->id)->delete();
+        }
+        User::where('id', $datamhs->id)->delete();
+        return redirect('/dataMahasiswa')->with('success', 'Berhasil Dihapus!');
     }
 }

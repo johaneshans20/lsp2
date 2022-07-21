@@ -26,6 +26,11 @@
                                 placeholder="NPM">
                         </div>
                         <div class="mb-3">
+                            <label for="exampleFormControlInput1" class="form-label">Kelas</label>
+                            <input type="text" name="kelas" class="form-control" id="exampleFormControlInput1"
+                                placeholder="NPM">
+                        </div>
+                        <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Username</label>
                             <input type="text" name="username" class="form-control" id="exampleFormControlInput1"
                                 placeholder="Username">
